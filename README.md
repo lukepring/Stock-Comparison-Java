@@ -17,6 +17,6 @@ This is a Java-based web application for charting and comparing share prices ove
 | Title | Deadline | Marks | Code Review |
 | :--- | :--- | :--- | :--- |
 | **Sprint 1** | 19.2.26 | 25% | 20.2.26 |
-| **Sprint 3** | 19.3.26 | 25% | 20.3.26 |
+| **Sprint 2** | 19.3.26 | 25% | 20.3.26 |
 | **Sprint 3** | 24.4.26 | 40% | 23.4.26 |
 | **Individual Reflection** | 23.4.26 | 10% | - |
