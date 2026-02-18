@@ -11,7 +11,7 @@ This is a Java-based web application for charting and comparing share prices ove
 - Luke Pring (A00012218)
 - Jack Turner (A00011257)
 - Azlan Rashid (A00039826)
-- Sameer Shabbir (TBA)
+- Sameer Shabbir (A00016610)
 
 ## Deadline and Marking
 | Title | Deadline | Marks | Code Review |
