@@ -5,7 +5,7 @@
 
 ## Component Specification Diagram
 
-<img width="1024" height="718" alt="image" src="https://github.com/user-attachments/assets/d615d32f-bca0-4af4-9c38-fca50d31acd8" />
+<img width="817" height="632" alt="image" src="https://github.com/user-attachments/assets/447eda06-dd11-4039-bd2a-eb2400fb0771" />
 
 
 
