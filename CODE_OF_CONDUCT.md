@@ -41,3 +41,9 @@ warning in the group chat.<br/>
 module brief which includes evidence gathering to present to the module
 delivery team, and allowing for the member to explain any mitigating
 circumstances.
+
+### Signed
+Jack Turner - 24/02/26
+<br/>Luke Pring - 
+<br/>Azlan Rashid -
+<br/>Sameer Shabbir -
