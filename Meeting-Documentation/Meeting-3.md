@@ -20,7 +20,7 @@
 
 ## Roundtable Updates
 - **Luke:** Planned Sprint 2 priorities and task split.  
-- **Jack:** Took frontend/UI tasks and updated board items.  
+- **Jack:** Took ownership of frontend/UI development tasks including user interface design, component implementation, and data visualization features. Updated Kanban board items with detailed task breakdowns and technical specifications for UI components.  
 - **Azlan:** Updated the architecture plan for Sprint 2 features.  
 - **Sameer:** Continued meeting reports and tracked tasks/updates on the board.  
 
@@ -34,4 +34,4 @@
 - Add Sprint 2 tasks + priorities to the Kanban board (**Luke**)
 - Start Sprint 2 coding (**Sameer**)
 - Update the architecture diagram for Sprint 2 (**Azlan**)
-- Help with PRs and keeping tasks updated (**Jack**)
+- Implement frontend UI components including stock comparison views, data visualization charts, and user input forms. Manage PR reviews for frontend code and maintain project governance standards. Create technical documentation for UI/UX design patterns and component architecture (**Jack**)
