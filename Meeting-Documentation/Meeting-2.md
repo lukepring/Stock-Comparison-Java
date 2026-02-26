@@ -1,7 +1,7 @@
 # Meeting Report — 16/02/2026 (13:00–13:45)
 
 ## Project
-**Stock Comaprison Application**
+**Stock Comparison Application**
 
 ## Meeting Goal
 - Review Sprint 1 deliverables against the mark scheme
@@ -20,7 +20,7 @@
 
 ## Roundtable Updates
 - **Luke:** Checked Sprint 1 work matches the marking criteria.  
-- **Jack:** Confirmed Code of Conduct + PR rules are in GitHub.  
+- **Jack:** Confirmed Code of Conduct + PR rules are in GitHub, reviewed all project governance documentation for completeness and compliance with best practices.  
 - **Azlan:** Presented the architecture diagram and explained it.  
 - **Sameer:** Completed Sprint 1 meeting reports and organised evidence for submission.  
 
@@ -32,6 +32,6 @@
 
 ## Actions
 - Review Sprint 1 for code review + fix any issues (**Luke + Sameer**)
-- Check Code of Conduct + PR process is followed (**Jack**)
+- Check Code of Conduct + PR process is followed, enforce code review standards, and ensure all governance documentation is properly linked in the repository (**Jack**)
 - Final check of architecture diagram to ensure it matches code structure (**Azlan**)
 - Update Kanban with Sprint 2 tasks from feedback (**Luke**)
