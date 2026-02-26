@@ -1,7 +1,7 @@
 # Meeting Report — 12/02/2026 (15:30–16:30)
 
 ## Project
-**Stock Comaprison Application**
+**Stock Comparison Application**
 
 ## Meeting Goal
 - Confirm project brief, sprint deadlines/marks
