@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Software Architecture and Design</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --border: #000000;
+            --muted: #666666;
+            --highlight: #f0f0f0;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+            -webkit-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            border-bottom: 4px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        form {
+            display: flex;
+            gap: 0; 
+            margin-bottom: 2rem;
+            border: 2px solid var(--border);
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            border-right: 2px solid var(--border);
+            padding: 0.75rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            border-radius: 0;
+        }
+
+        input:focus {
+            outline: none;
+            background: var(--highlight);
+        }
+
+        button {
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            padding: 0 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 0;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: var(--muted);
+        }
+
+        .chart-wrap {
+            border: 2px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        #chart {
+            border: 1px solid var(--border);
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid var(--border);
+            display: inline-block;
+        }
+
+        .dot-1 { background: #181d80; }
+        .dot-2 { background: #911d1d; }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        section {
+            border-top: 2px solid var(--border);
+        }
+
+        h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin: 0.5rem 0;
+        }
+
+        b {
+            font-size: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: monospace;
+        }
+
+        th {
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            padding: 0.5rem 0;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.85rem;
+        }
+
+        tr:hover td {
+            background: var(--highlight);
+        }
+
+        .muted {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .cards { grid-template-columns: 1fr; }
+            form { flex-direction: column; border: none; gap: 1rem; }
+            input { border: 2px solid var(--border); }
+            button { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Software Architecture and Design</h1>
+
+    <form method="post" action="/compare">
+        <input name="symbol1" placeholder="First symbol (e.g. AAPL)" th:value="${symbol1}" required />
+        <input name="symbol2" placeholder="Second symbol (e.g. MSFT)" th:value="${symbol2}" required />
+        <input name="startDate" type="date" th:value="${startDate}" />
+        <input name="endDate" type="date" th:value="${endDate}" />
+        <button type="submit">Compare</button>
+    </form>
+
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+
+    <div th:if="${result}">
+        <p class="muted" th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.startDate} to ${result.endDate}|"></p>
+
+        <div class="chart-wrap">
+            <div class="legend">
+                <span><i class="dot dot-1"></i><b th:text="${result.symbol1}"></b></span>
+                <span><i class="dot dot-2"></i><b th:text="${result.symbol2}"></b></span>
+            </div>
+            <svg id="chart" viewBox="0 0 900 360" preserveAspectRatio="none">
+                <line th:attr="x1=${result.chartData.left},y1=${result.chartData.bottom},x2=${result.chartData.right},y2=${result.chartData.bottom}"
+                      stroke="#8ca0b7" stroke-width="1"></line>
+                <line th:attr="x1=${result.chartData.left},y1=${result.chartData.top},x2=${result.chartData.left},y2=${result.chartData.bottom}"
+                      stroke="#8ca0b7" stroke-width="1"></line>
+                <line th:attr="x1=${result.chartData.left},y1=${result.chartData.midY},x2=${result.chartData.right},y2=${result.chartData.midY}"
+                      stroke="#dbe3ee" stroke-width="1"></line>
+
+                <text class="axis-label"
+                      th:attr="x=${(result.chartData.left + result.chartData.right) / 2},y=${result.chartData.bottom + 26}"
+                      text-anchor="middle">Date</text>
+                <text class="axis-label"
+                      th:attr="x=${result.chartData.left - 40},y=${(result.chartData.top + result.chartData.bottom) / 2}"
+                      text-anchor="middle"
+                      th:attrappend="transform=${'rotate(-90 ' + (result.chartData.left - 40) + ' ' + ((result.chartData.top + result.chartData.bottom) / 2) + ')'}">Price</text>
+
+                <path th:attr="d=${result.chartData.symbol1Path}" fill="none" stroke="#181d80" stroke-width="2.5"></path>
+                <path th:attr="d=${result.chartData.symbol2Path}" fill="none" stroke="#911d1d" stroke-width="2.5"></path>
+
+                <g th:each="point : ${result.chartData.symbol1Points}">
+                    <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#181d80"></circle>
+                    <!--<text class="value-label" th:attr="x=${point.x + 4},y=${point.y - 4}" th:text="${point.value}"></text>-->
+                </g>
+
+                <g th:each="point : ${result.chartData.symbol2Points}">
+                    <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#911d1d"></circle>
+                    <!--<text class="value-label" th:attr="x=${point.x + 4},y=${point.y + 12}" th:text="${point.value}"></text>-->
+                </g>
+            </svg>
+        </div>
+
+        <div class="cards">
+            <section>
+                <h3 th:text="${result.symbol1}"></h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Close</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="point : ${result.symbol1Data}">
+                        <td th:text="${point.date}"></td>
+                        <td th:text="${point.closingPrice}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3 th:text="${result.symbol2}"></h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Close</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="point : ${result.symbol2Data}">
+                        <td th:text="${point.date}"></td>
+                        <td th:text="${point.closingPrice}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
