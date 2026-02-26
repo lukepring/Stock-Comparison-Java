@@ -1,0 +1,11 @@
+package com.sharecomparison.application;
+
+import com.sharecomparison.domain.ComparisonResult;
+
+import java.time.LocalDate;
+
+public interface IPriceComparisonService {
+
+    ComparisonResult compare(String symbol1, String symbol2,
+                             LocalDate startDate, LocalDate endDate);
+}
