@@ -21,7 +21,7 @@
 
 ## Roundtable Updates
 - **Luke:** Confirmed project scope + Sprint 1 focus.  
-- **Jack:** Will draft Code of Conduct + GitHub rules.  
+- **Jack:** Will help with repository setup and governance documentation.  
 - **Azlan:** Will research architecture + start component diagram.  
 - **Sameer:** Will write meeting reports and help set up repo/board.  
 
@@ -32,7 +32,7 @@
 - Split Sprint 1 tasks (requirements, architecture, diagram, Java skeleton, meeting notes)
 
 ## Actions
-- Set up GitHub repo + Kanban Board (**Luke**)
-- Write Code of Conduct + PR rules (**Jack**)
+- Set up GitHub repo + Kanban Board (**Luke + Sameer**)
+- Contribute to Code of Conduct + PR rules (**Jack + Luke**)
 - Start architecture research + component diagram (**Azlan**)
 - Write meeting reports + draft requirements (**Sameer**)
