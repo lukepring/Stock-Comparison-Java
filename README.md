@@ -20,3 +20,6 @@ This is a Java-based web application for charting and comparing share prices ove
 | **Sprint 2** | 19.3.26 | 25% | 20.3.26 |
 | **Sprint 3** | 24.4.26 | 40% | 23.4.26 |
 | **Individual Reflection** | 23.4.26 | 10% | - |
+
+## How to run
+<code>./mvnw spring-boot:run</code>
