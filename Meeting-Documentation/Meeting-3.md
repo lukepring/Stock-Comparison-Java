@@ -20,7 +20,7 @@
 
 ## Roundtable Updates
 - **Luke:** Planned Sprint 2 priorities and task split.  
-- **Jack:** Took frontend/UI tasks and updated board items.  
+- **Jack:** Will contribute to frontend/UI implementation.  
 - **Azlan:** Updated the architecture plan for Sprint 2 features.  
 - **Sameer:** Continued meeting reports and tracked tasks/updates on the board.  
 
@@ -31,7 +31,7 @@
 - Assigned backend vs frontend responsibilities and updated Kanban board
 
 ## Actions
-- Add Sprint 2 tasks + priorities to the Kanban board (**Luke**)
-- Start Sprint 2 coding (**Sameer**)
+- Add Sprint 2 tasks + priorities to the Kanban board (**Luke + Jack**)
+- Start Sprint 2 coding (**Sameer + Jack**)
 - Update the architecture diagram for Sprint 2 (**Azlan**)
-- Help with PRs and keeping tasks updated (**Jack**)
+- Support team with implementation tasks (**All team members**)

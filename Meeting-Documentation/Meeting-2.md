@@ -20,7 +20,7 @@
 
 ## Roundtable Updates
 - **Luke:** Checked Sprint 1 work matches the marking criteria.  
-- **Jack:** Confirmed Code of Conduct + PR rules are in GitHub.  
+- **Jack:** Reviewed repository governance and contribution guidelines.  
 - **Azlan:** Presented the architecture diagram and explained it.  
 - **Sameer:** Completed Sprint 1 meeting reports and organised evidence for submission.  
 
@@ -32,6 +32,6 @@
 
 ## Actions
 - Review Sprint 1 for code review + fix any issues (**Luke + Sameer**)
-- Check Code of Conduct + PR process is followed (**Jack**)
+- Support team with repository processes (**Jack + Azlan**)
 - Final check of architecture diagram to ensure it matches code structure (**Azlan**)
-- Update Kanban with Sprint 2 tasks from feedback (**Luke**)
+- Update Kanban with Sprint 2 tasks from feedback (**Luke + Jack**)
