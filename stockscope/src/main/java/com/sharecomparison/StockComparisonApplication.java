@@ -3,11 +3,12 @@ package com.sharecomparison;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.sharecomparison.application.MarketDataService;
 import com.sharecomparison.application.PriceRepository;
+import com.sharecomparison.infrastructure.AlphaVantageService;
 import com.sharecomparison.infrastructure.InMemoryPriceRepository;
-import com.sharecomparison.infrastructure.YahooFinanceService;
 
 @SpringBootApplication
 public class StockComparisonApplication {
@@ -22,7 +23,10 @@ public class StockComparisonApplication {
     }
 
     @Bean
-    public MarketDataService marketDataService(PriceRepository priceRepository) {
-        return new YahooFinanceService(priceRepository);
+    public MarketDataService marketDataService(
+            PriceRepository repository,
+            @Value("${alphavantage.key:demo}") String apiKey,
+            @Value("${alphavantage.outputsize:compact}") String outputSize) {
+        return new AlphaVantageService(repository, apiKey, outputSize);
     }
 }

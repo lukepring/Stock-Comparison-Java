@@ -10,7 +10,6 @@ import java.util.Map;   // or GetMapping if form is GET
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sharecomparison.application.MarketDataService;
@@ -32,10 +31,10 @@ public class WebPageController {
         model.addAttribute("symbol2", "MSFT");
         model.addAttribute("startDate", LocalDate.now().minusYears(1).toString());
         model.addAttribute("endDate", LocalDate.now().toString());
-        return "index";  // your Thymeleaf template
+        return "index";
     }
 
-    @PostMapping("/compare")   // Change to @GetMapping("/compare") if you update form method="get"
+    @GetMapping("/compare")   
     public String compare(
             @RequestParam String symbol1,
             @RequestParam String symbol2,
@@ -64,7 +63,7 @@ public class WebPageController {
         data1.sort(Comparator.comparing(PriceData::getDate));
         data2.sort(Comparator.comparing(PriceData::getDate));
 
-        // Chart coords calculation (fits your SVG 900x360 viewBox)
+        // Chart coords calculation
         double chartWidth = 800, chartHeight = 300;
         double left = 80, right = left + chartWidth;
         double bottom = 320, top = bottom - chartHeight;
