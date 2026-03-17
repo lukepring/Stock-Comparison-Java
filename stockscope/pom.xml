@@ -50,6 +50,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>4.0.2</version>
+				<configuration>
+					<mainClass>com.sharecomparison.StockComparisonApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
