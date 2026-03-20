@@ -1,11 +1,11 @@
 package com.sharecomparison.presentation;
 
-import java.time.LocalDate;  // adjust package if needed
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;   // or GetMapping if form is GET
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
