@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+.DS_Store
+stockscope/src/main/java/com/.DS_Store
+stockscope/.DS_Store
+stockscope/.DS_Store

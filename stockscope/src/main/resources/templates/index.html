@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Software Architecture and Design</title>
+    <title>Share Price Comparison</title>
     <style>
         :root {
             --bg: #ffffff;
@@ -40,7 +40,7 @@
 
         form {
             display: flex;
-            gap: 0; 
+            gap: 0;
             margin-bottom: 2rem;
             border: 2px solid var(--border);
         }
@@ -53,6 +53,18 @@
             font-family: monospace;
             font-size: 0.9rem;
             border-radius: 0;
+        }
+
+        small {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-align: center;
+            font-family: monospace;
+            display: block;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            width: 100%;
+            text-transform: uppercase;
         }
 
         input:focus {
@@ -103,8 +115,13 @@
             display: inline-block;
         }
 
-        .dot-1 { background: #181d80; }
-        .dot-2 { background: #911d1d; }
+        .dot-1 {
+            background: #181d80;
+        }
+
+        .dot-2 {
+            background: #911d1d;
+        }
 
         .cards {
             display: grid;
@@ -164,87 +181,132 @@
         }
 
         @media (max-width: 768px) {
-            .cards { grid-template-columns: 1fr; }
-            form { flex-direction: column; border: none; gap: 1rem; }
-            input { border: 2px solid var(--border); }
-            button { padding: 1rem; }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            form {
+                flex-direction: column;
+                border: none;
+                gap: 1rem;
+            }
+
+            input {
+                border: 2px solid var(--border);
+            }
+
+            button {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Software Architecture and Design</h1>
+    <div class="container">
+        <h1>Share Price Comparison</h1>
 
-    <form method="get" action="/compare">
-        <input name="symbol1" placeholder="First symbol (e.g. AAPL)" th:value="${symbol1}" required />
-        <input name="symbol2" placeholder="Second symbol (e.g. MSFT)" th:value="${symbol2}" required />
-        <input name="startDate" type="date" th:value="${startDate}" />
-        <input name="endDate" type="date" th:value="${endDate}" />
-        <button type="submit">Compare</button>
-    </form>
+        <form method="get" action="/compare">
+            <input name="symbol1" placeholder="First symbol (e.g. AAPL)" th:value="${symbol1}" required />
+            <input name="symbol2" placeholder="Second symbol (e.g. MSFT)" th:value="${symbol2}" required />
+            <input name="startDate" type="date" th:value="${startDate}" />
+            <input name="endDate" type="date" th:value="${endDate}" />
+            <button type="submit">Compare</button>
+        </form>
 
-    <div class="error" th:if="${error}" th:text="${error}"></div>
+        <div class="error" th:if="${error}" th:text="${error}"></div>
 
-    <div th:if="${result}">
-        <p class="muted" th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.startDate} to ${result.endDate}|"></p>
+        <div th:if="${result}">
+            <p class="muted"
+               th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.startDate} to ${result.endDate}|">
+            </p>
 
-        <div class="chart-wrap">
-            <div class="legend">
-                <span><i class="dot dot-1"></i><b th:text="${result.symbol1}"></b></span>
-                <span><i class="dot dot-2"></i><b th:text="${result.symbol2}"></b></span>
+            <div class="chart-wrap">
+                <div class="legend">
+                    <span><i class="dot dot-1"></i><b th:text="${result.symbol1}"></b></span>
+                    <span><i class="dot dot-2"></i><b th:text="${result.symbol2}"></b></span>
+                </div>
+                <svg id="chart" viewBox="0 0 900 360" preserveAspectRatio="none">
+                    <line
+                        th:attr="x1=${result.chartData.left},y1=${result.chartData.bottom},x2=${result.chartData.right},y2=${result.chartData.bottom}"
+                        stroke="#8ca0b7" stroke-width="1"></line>
+                    <line
+                        th:attr="x1=${result.chartData.left},y1=${result.chartData.top},x2=${result.chartData.left},y2=${result.chartData.bottom}"
+                        stroke="#8ca0b7" stroke-width="1"></line>
+                    <line
+                        th:attr="x1=${result.chartData.left},y1=${result.chartData.midY},x2=${result.chartData.right},y2=${result.chartData.midY}"
+                        stroke="#dbe3ee" stroke-width="1"></line>
+
+                    <text class="axis-label"
+                        th:attr="x=${(result.chartData.left + result.chartData.right) / 2},y=${result.chartData.bottom + 26}"
+                        text-anchor="middle">Date</text>
+                    <text class="axis-label"
+                        th:attr="x=${result.chartData.left - 40},y=${(result.chartData.top + result.chartData.bottom) / 2}"
+                        text-anchor="middle"
+                        th:attrappend="transform=${'rotate(-90 ' + (result.chartData.left - 40) + ' ' + ((result.chartData.top + result.chartData.bottom) / 2) + ')'}">Price</text>
+
+                    <path th:attr="d=${result.chartData.symbol1Path}" fill="none" stroke="#181d80" stroke-width="2.5">
+                    </path>
+                    <path th:attr="d=${result.chartData.symbol2Path}" fill="none" stroke="#911d1d" stroke-width="2.5">
+                    </path>
+
+                    <g th:each="point : ${result.chartData.symbol1Points}">
+                        <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#181d80"></circle>
+                        <!--<text class="value-label" th:attr="x=${point.x + 4},y=${point.y - 4}" th:text="${point.value}"></text>-->
+                    </g>
+
+                    <g th:each="point : ${result.chartData.symbol2Points}">
+                        <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#911d1d"></circle>
+                        <!--<text class="value-label" th:attr="x=${point.x + 4},y=${point.y + 12}" th:text="${point.value}"></text>-->
+                    </g>
+                </svg>
             </div>
-            <svg id="chart" viewBox="0 0 900 360" preserveAspectRatio="none">
-                <line th:attr="x1=${result.chartData.left},y1=${result.chartData.bottom},x2=${result.chartData.right},y2=${result.chartData.bottom}" stroke="#8ca0b7" stroke-width="1"></line>
-                <line th:attr="x1=${result.chartData.left},y1=${result.chartData.top},x2=${result.chartData.left},y2=${result.chartData.bottom}" stroke="#8ca0b7" stroke-width="1"></line>
-                <line th:attr="x1=${result.chartData.left},y1=${result.chartData.midY},x2=${result.chartData.right},y2=${result.chartData.midY}" stroke="#dbe3ee" stroke-width="1"></line>
 
-                <text class="axis-label" th:attr="x=${(result.chartData.left + result.chartData.right) / 2},y=${result.chartData.bottom + 26}" text-anchor="middle" fill="#666">Date</text>
-                <text class="axis-label" th:attr="x=${result.chartData.left - 40},y=${(result.chartData.top + result.chartData.bottom) / 2}" text-anchor="middle" th:attrappend="transform=${'rotate(-90 ' + (result.chartData.left - 40) + ' ' + ((result.chartData.top + result.chartData.bottom) / 2) + ')'}">Price</text>
+            <div class="cards">
+                <section>
+                    <h3 th:text="${result.symbol1}"></h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Close</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="point : ${result.symbol1Data}">
+                                <td th:text="${point.date}"></td>
+                                <td th:text="${point.closingPrice}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-                <path th:attr="d=${result.chartData.symbol1Path}" fill="none" stroke="#181d80" stroke-width="2.5"></path>
-                <path th:attr="d=${result.chartData.symbol2Path}" fill="none" stroke="#911d1d" stroke-width="2.5"></path>
-
-                <g th:each="point : ${result.chartData.symbol1Points}">
-                    <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#181d80"></circle>
-                </g>
-                <g th:each="point : ${result.chartData.symbol2Points}">
-                    <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#911d1d"></circle>
-                </g>
-            </svg>
+                <section>
+                    <h3 th:text="${result.symbol2}"></h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Close</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="point : ${result.symbol2Data}">
+                                <td th:text="${point.date}"></td>
+                                <td th:text="${point.closingPrice}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
 
-        <div class="cards">
-            <section>
-                <h3 th:text="${result.symbol1}"></h3>
-                <table>
-                    <thead><tr><th>Date</th><th>Close</th></tr></thead>
-                    <tbody>
-                    <tr th:each="point : ${result.symbol1Data}">
-                        <td th:text="${point.date}"></td>
-                        <td th:text="${point.closingPrice}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section>
-                <h3 th:text="${result.symbol2}"></h3>
-                <table>
-                    <thead><tr><th>Date</th><th>Close</th></tr></thead>
-                    <tbody>
-                    <tr th:each="point : ${result.symbol2Data}">
-                        <td th:text="${point.date}"></td>
-                        <td th:text="${point.closingPrice}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
+        <div th:unless="${result}" class="muted">
+            Enter two stock symbols and a date range above to see live historical comparison.
         </div>
     </div>
-
-    <div th:unless="${result}" class="muted">
-        Enter two stock symbols and a date range above to see live historical comparison.
-    </div>
-</div>
+    <footer>
+        <small>Software Architecture and Design - University of Roehampton - <a
+                href="https://github.com/lukepring/Stock-Comparison-Java">View on GitHub</a></small>
+    </footer>
 </body>
 </html>

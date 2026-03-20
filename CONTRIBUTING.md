@@ -138,7 +138,7 @@ Develop architecture from requirements using formal models
 
 ### Member Responsibilities  
 
-**Member A**  
+**Member A - Azlan**  
 - Create Business Concept Model  
 - Create Use Case Diagram  
 - Write detailed use case descriptions  
