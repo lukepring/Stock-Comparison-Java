@@ -21,7 +21,6 @@ public class WebPageController {
 
     @GetMapping("/")
     public String showForm(Model model) {
-        // Defaults for empty form on first visit
         model.addAttribute("symbol1", "AAPL");
         model.addAttribute("symbol2", "MSFT");
         model.addAttribute("startDate", LocalDate.now().minusYears(1).toString());
@@ -52,8 +51,7 @@ public class WebPageController {
             return "index";
         }
 
-        List<PriceData> data1 = marketDataService.fetchSharePrices(symbol1, start, end);
-        List<PriceData> data2 = marketDataService.fetchSharePrices(symbol2, start, end);
+        ComparisonResult result = priceController.comparePrices(symbol1, symbol2, start, end);
 
         if (result.getSymbol1Data().isEmpty() || result.getSymbol2Data().isEmpty()) {
             model.addAttribute("error", "No data available for one or both symbols in this range.");
