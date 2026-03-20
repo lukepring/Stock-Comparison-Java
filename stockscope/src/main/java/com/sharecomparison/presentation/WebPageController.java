@@ -48,6 +48,15 @@ public class WebPageController {
         symbol1 = symbol1.trim().toUpperCase();
         symbol2 = symbol2.trim().toUpperCase();
 
+        if (start.isAfter(end)) {
+            model.addAttribute("error", "Start date must be on or before end date.");
+            model.addAttribute("symbol1", symbol1);
+            model.addAttribute("symbol2", symbol2);
+            model.addAttribute("startDate", start.toString());
+            model.addAttribute("endDate", end.toString());
+            return "index";
+        }
+
         List<PriceData> data1 = marketDataService.fetchSharePrices(symbol1, start, end);
         List<PriceData> data2 = marketDataService.fetchSharePrices(symbol2, start, end);
 
