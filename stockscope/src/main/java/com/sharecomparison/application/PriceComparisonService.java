@@ -41,7 +41,7 @@ public class PriceComparisonService implements IPriceComparisonService {
         }
         
         if (start.isAfter(end)) {
-            throw new IllegalArgumentException("Start date must be before end date.");
+            throw new IllegalArgumentException("Start date cannot be after end date.");
         }
     }
 }
