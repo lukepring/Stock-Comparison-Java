@@ -91,4 +91,3 @@ public class WebPageController {
         return "index";
     }
 }
-}
