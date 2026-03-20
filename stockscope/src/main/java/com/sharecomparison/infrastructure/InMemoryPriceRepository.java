@@ -13,7 +13,24 @@ public class InMemoryPriceRepository implements PriceRepository {
 
     @Override
     public void savePrices(List<PriceData> prices) {
-        storedPrices.addAll(prices);
+        for (PriceData newPrice : prices) {
+            boolean replaced = false;
+
+            for (int i = 0; i < storedPrices.size(); i++) {
+                PriceData existing = storedPrices.get(i);
+
+                if (existing.getSymbol().equals(newPrice.getSymbol())
+                        && existing.getDate().equals(newPrice.getDate())) {
+                    storedPrices.set(i, newPrice);
+                    replaced = true;
+                    break;
+                }
+            }
+
+            if (!replaced) {
+                storedPrices.add(newPrice);
+            }
+        }
     }
 
     @Override
