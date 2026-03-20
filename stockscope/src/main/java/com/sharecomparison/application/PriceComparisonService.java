@@ -8,7 +8,9 @@ import com.sharecomparison.infrastructure.IMarketDataClient;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+
 
 @Service
 public class PriceComparisonService implements IPriceComparisonService {
@@ -25,47 +27,59 @@ public class PriceComparisonService implements IPriceComparisonService {
         this.chartBuilder = chartBuilder;
     }
 
-    // Enforce two-year validation rule
-    private void validateDateRange(LocalDate start, LocalDate end) {
-        if (start.plusYears(2).isBefore(end)) {
-            throw new IllegalArgumentException("Maximum range allowed is two years.");
-        }
-    }
-
-    // Implement FetchSharePricesUseCase logic
-    private List<PriceData> fetchSharePrices(String symbol, LocalDate start, LocalDate end) {
-        validateDateRange(start, end); 
-        List<PriceData> data = marketDataClient.fetch(symbol, start, end);
-        cacheStore.save(symbol, data); // Requirement for persistence 
-        return data;
-    }
-
-    // Implement CompareSharesUseCase logic
+  
     @Override
-    @SuppressWarnings("unchecked")
     public ComparisonResult compare(String symbol1, String symbol2,
                                     LocalDate startDate, LocalDate endDate) {
 
+   
+        validateDateRange(startDate, endDate);
+
+       
         List<PriceData> data1 = loadOrFetch(symbol1, startDate, endDate);
         List<PriceData> data2 = loadOrFetch(symbol2, startDate, endDate);
 
+    
         ChartData chartData = chartBuilder.buildChart(data1, data2);
+        
         return new ComparisonResult(symbol1, symbol2, startDate, endDate, data1, data2, chartData);
     }
 
+   
     private List<PriceData> loadOrFetch(String symbol, LocalDate startDate, LocalDate endDate) {
+     
         String cacheKey = symbol + ":" + startDate + ":" + endDate;
 
-        @SuppressWarnings("unchecked")
-        List<PriceData> cached = (List<PriceData>) cacheStore.load(cacheKey);
-        if (cached != null) {
-            System.out.println("Cache hit for " + symbol);
+
+        List<PriceData> cached = cacheStore.load(cacheKey);
+        if (cached != null && !cached.isEmpty()) {
             return cached;
         }
 
         List<PriceData> fetched = marketDataClient.fetch(symbol, startDate, endDate);
-        cacheStore.save(cacheKey, fetched);
+        
+       
+        if (fetched != null && !fetched.isEmpty()) {
+            cacheStore.save(cacheKey, fetched);
+        }
+        
         return fetched;
     }
 
+
+    private void validateDateRange(LocalDate start, LocalDate end) {
+        if (start == null || end == null) {
+            throw new IllegalArgumentException("Start and End dates must be provided.");
+        }
+        
+        long daysBetween = ChronoUnit.DAYS.between(start, end);
+        // Approximately 2 years (730 days)
+        if (daysBetween > 730) {
+            throw new IllegalArgumentException("The maximum date range permitted is two years.");
+        }
+        
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date must be before end date.");
+        }
+    }
 }

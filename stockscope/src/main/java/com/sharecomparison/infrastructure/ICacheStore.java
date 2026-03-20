@@ -1,8 +1,9 @@
 package com.sharecomparison.infrastructure;
 
+import com.sharecomparison.domain.PriceData;
+import java.util.List;
+
 public interface ICacheStore {
-
-    void save(String key, Object data);
-
-    Object load(String key);
+    void save(String key, List<PriceData> data);
+    List<PriceData> load(String key); 
 }
