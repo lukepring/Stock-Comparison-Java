@@ -22,4 +22,8 @@ This is a Java-based web application for charting and comparing share prices ove
 | **Individual Reflection** | 23.4.26 | 10% | - |
 
 ## How to run
-<code>./mvnw spring-boot:run</code>
+`cd stockscope && ./mvnw spring-boot:run`
+
+### Set your API key
+- Mac/Linux (zsh): `export ALPHAVANTAGE_KEY="YOUR_KEY_HERE"` then restart the app.
+- If you run from an IDE (IntelliJ/Eclipse), set `ALPHAVANTAGE_KEY` in the Run/Debug configuration environment variables (Terminal exports may not be inherited).

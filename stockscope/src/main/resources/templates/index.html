@@ -175,6 +175,12 @@
             display: block;
         }
 
+        .error {
+            color: #911d1d;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) {
             .cards {
                 grid-template-columns: 1fr;
@@ -201,7 +207,7 @@
     <div class="container">
         <h1>Share Price Comparison</h1>
 
-        <form method="post" action="/compare">
+        <form method="get" action="/compare">
             <input name="symbol1" placeholder="First symbol (e.g. AAPL)" th:value="${symbol1}" required />
             <input name="symbol2" placeholder="Second symbol (e.g. MSFT)" th:value="${symbol2}" required />
             <input name="startDate" type="date" th:value="${startDate}" />
@@ -213,7 +219,7 @@
 
         <div th:if="${result}">
             <p class="muted"
-                th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.startDate} to ${result.endDate}|">
+               th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.startDate} to ${result.endDate}|">
             </p>
 
             <div class="chart-wrap">
@@ -294,7 +300,10 @@
                     </table>
                 </section>
             </div>
+        </div>
 
+        <div th:unless="${result}" class="muted">
+            Enter two stock symbols and a date range above to see live historical comparison.
         </div>
     </div>
     <footer>

@@ -34,4 +34,4 @@
 - Review Sprint 1 for code review + fix any issues (**Luke + Sameer**)
 - Support team with repository processes (**Jack + Azlan**)
 - Final check of architecture diagram to ensure it matches code structure (**Azlan**)
-- Update Kanban with Sprint 2 tasks from feedback (**Luke + Jack**)
+- Update Kanban with Sprint 2 tasks from feedback (**Jack**)
