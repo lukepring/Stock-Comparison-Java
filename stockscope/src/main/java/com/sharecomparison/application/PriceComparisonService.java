@@ -42,15 +42,30 @@ public class PriceComparisonService implements IPriceComparisonService {
 
     // Implement CompareSharesUseCase logic
     @Override
-    public ComparisonResult compare(String symbol1, String symbol2, 
+    @SuppressWarnings("unchecked")
+    public ComparisonResult compare(String symbol1, String symbol2,
                                     LocalDate startDate, LocalDate endDate) {
-        
-        // Execute Fetch Use Cases for both symbols
-        List<PriceData> data1 = fetchSharePrices(symbol1, startDate, endDate);
-        List<PriceData> data2 = fetchSharePrices(symbol2, startDate, endDate);
+
+        List<PriceData> data1 = loadOrFetch(symbol1, startDate, endDate);
+        List<PriceData> data2 = loadOrFetch(symbol2, startDate, endDate);
 
         ChartData chartData = chartBuilder.buildChart(data1, data2);
-        
         return new ComparisonResult(symbol1, symbol2, startDate, endDate, data1, data2, chartData);
     }
+
+    private List<PriceData> loadOrFetch(String symbol, LocalDate startDate, LocalDate endDate) {
+        String cacheKey = symbol + ":" + startDate + ":" + endDate;
+
+        @SuppressWarnings("unchecked")
+        List<PriceData> cached = (List<PriceData>) cacheStore.load(cacheKey);
+        if (cached != null) {
+            System.out.println("Cache hit for " + symbol);
+            return cached;
+        }
+
+        List<PriceData> fetched = marketDataClient.fetch(symbol, startDate, endDate);
+        cacheStore.save(cacheKey, fetched);
+        return fetched;
+    }
+
 }
