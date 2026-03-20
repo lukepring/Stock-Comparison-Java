@@ -17,25 +17,40 @@ public class PriceComparisonService implements IPriceComparisonService {
     private final IMarketDataClient marketDataClient;
     private final IChartBuilder chartBuilder;
 
-    public PriceComparisonService(ICacheStore cacheStore,
-                                  IMarketDataClient marketDataClient,
+    public PriceComparisonService(ICacheStore cacheStore, 
+                                  IMarketDataClient marketDataClient, 
                                   IChartBuilder chartBuilder) {
         this.cacheStore = cacheStore;
         this.marketDataClient = marketDataClient;
         this.chartBuilder = chartBuilder;
     }
 
+    // Enforce two-year validation rule
+    private void validateDateRange(LocalDate start, LocalDate end) {
+        if (start.plusYears(2).isBefore(end)) {
+            throw new IllegalArgumentException("Maximum range allowed is two years.");
+        }
+    }
+
+    // Implement FetchSharePricesUseCase logic
+    private List<PriceData> fetchSharePrices(String symbol, LocalDate start, LocalDate end) {
+        validateDateRange(start, end); 
+        List<PriceData> data = marketDataClient.fetch(symbol, start, end);
+        cacheStore.save(symbol, data); // Requirement for persistence 
+        return data;
+    }
+
+    // Implement CompareSharesUseCase logic
     @Override
-    public ComparisonResult compare(String symbol1, String symbol2,
+    public ComparisonResult compare(String symbol1, String symbol2, 
                                     LocalDate startDate, LocalDate endDate) {
-
-        List<PriceData> data1 = marketDataClient.fetch(symbol1, startDate, endDate);
-        List<PriceData> data2 = marketDataClient.fetch(symbol2, startDate, endDate);
-
-        cacheStore.save(symbol1, data1);
-        cacheStore.save(symbol2, data2);
+        
+        // Execute Fetch Use Cases for both symbols
+        List<PriceData> data1 = fetchSharePrices(symbol1, startDate, endDate);
+        List<PriceData> data2 = fetchSharePrices(symbol2, startDate, endDate);
 
         ChartData chartData = chartBuilder.buildChart(data1, data2);
+        
         return new ComparisonResult(symbol1, symbol2, startDate, endDate, data1, data2, chartData);
     }
 }
