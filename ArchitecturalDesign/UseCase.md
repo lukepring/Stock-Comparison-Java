@@ -1,41 +1,40 @@
 # Use Case Model
 
 ## Overview
-This use case model describes how the user interacts with the Share Price Comparison Web App. It focuses on the main tasks the user can perform and how the system responds to those actions. The diagram identifies the key use cases and shows how some actions depend on others.
+The use case diagram represents how a user interacts with the Share Price Comparison App and outlines the main functionality provided by the system. It identifies the different actions available to the user and shows how the system supports these actions through internal processes such as data retrieval, caching, and storage.
 
 ## Use Case Diagram
-<img width="818" height="611" alt="image" src="https://github.com/user-attachments/assets/61e5d7bf-6b55-4a5e-9ea8-6ab9c8ea5014" />
+<img width="965" height="741" alt="image" src="https://github.com/user-attachments/assets/775edbc1-c4d8-40f6-819e-95faf2d3ab10" />
+
+## Actor
+The system has one primary actor, which is the user. The user interacts with the application to search for share data, view prices, and perform comparisons.
 
 ## Main Use Cases
-The user can retrieve share price data, compare share prices, and view share price charts. These represent the main goals of the user when using the application.
+The diagram includes several key use cases that represent the core functionality of the system.
 
-The system also carries out supporting actions such as storing price data and retrieving cached data. These actions are not directly triggered by the user but are required for the system to function properly and to support offline use.
+The user can search for a share symbol and select a date range to define the period of interest. The user can also select and convert currency, allowing share prices to be viewed in different formats depending on preference.
 
-## Use Case Description: Compare Share Prices
+The system allows the user to view current share prices as well as historical data. This enables the user to analyse trends over time. In addition, the user can compare share prices between different companies and view the results in a chart format.
 
-### Actor
-User
+The user is also able to update share prices, ensuring that the data being viewed is accurate and up to date.
 
-### Description
-This use case allows the user to compare the share prices of one or two companies over a selected date range. The system retrieves the relevant data and presents it in a chart so that the user can easily compare performance over time.
+## Supporting System Use Cases
+Some use cases represent internal system behaviour rather than direct user interaction.
 
-### Precondition
-The user has access to the application and enters valid share symbols and a date range within the allowed limit.
+Retrieve Share Price Data is used by multiple user actions such as viewing prices, comparing shares, and updating data. This shows that many features rely on a common data retrieval process.
 
-### Main Flow
-1. The user enters one or two share symbols.
-2. The system validates the input.
-3. The user selects a date range.
-4. The system retrieves share price data for the selected shares from an external source.
-5. The system stores the retrieved data locally for future use.
-6. The system processes the data to prepare it for comparison.
-7. The system generates a chart based on the processed data.
-8. The system displays the chart to the user.
+Store Price Data ensures that retrieved data is saved locally so that it can be accessed later. This supports offline functionality and improves performance.
 
-### Alternative Flow
-If there is no internet connection, the system retrieves previously stored data instead of fetching new data.
+Retrieve Cached Data is used when displaying charts, allowing the system to reuse previously stored data instead of always making external requests.
 
-If the user enters invalid share symbols or an invalid date range, the system displays an error message and requests valid input.
+## Sequence of Interaction
+A typical interaction begins when the user searches for a share symbol and selects a date range. The system then retrieves the relevant share price data.
 
-### Postcondition
-The user is presented with a chart showing the comparison of share prices over the selected time period, and the data may be stored for later use.
+Once the data has been retrieved, it can be stored locally. The user can then choose to view current prices, view historical trends, or compare different shares.
+
+If the user chooses to view a chart, the system may retrieve cached data to improve performance. The user can also update share prices at any time, which triggers another data retrieval process.
+
+Currency selection and conversion can be applied at different stages, allowing the displayed data to be adapted to the user’s preference.
+
+## Summary
+Overall, the use case diagram demonstrates the main capabilities of the system and how user actions are supported by internal processes. It shows a clear separation between user-driven functionality and system-level operations, while also highlighting how different features depend on shared data retrieval and storage mechanisms.
