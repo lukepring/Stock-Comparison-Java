@@ -7,7 +7,7 @@
 
 <img width="817" height="632" alt="image" src="https://github.com/user-attachments/assets/447eda06-dd11-4039-bd2a-eb2400fb0771" />
 
-![Component Specification Diagram](component-diagram.png)
+![Component Specification Diagram](component-diagram-final)
 
 
 ## Architectural Concepts and Their Application
