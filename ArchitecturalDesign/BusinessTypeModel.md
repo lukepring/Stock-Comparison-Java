@@ -1,7 +1,7 @@
 # Business Type Model
 
 ## Business Type Model Diagram
-<img width="569" height="559" alt="Arch DesBusinessTypeModel" src="https://github.com/user-attachments/assets/7afd1ef2-2e1b-4df7-9085-d1e150756051" />
+<img width="882" height="671" alt="image" src="https://github.com/user-attachments/assets/6f93002d-d6fc-4aa6-8d40-7d4feef8a46e" />
 
 ## Description
-The business type model builds on the business concept model by introducing a more structured and detailed representation of the system. It defines key entities such as ComparisonResult, Share, PriceData, ChartData, and ChartPoint, along with their attributes and relationships. The model also groups related entities together and introduces conceptual interfaces to represent how different parts of the system interact. These interfaces describe the responsibilities of each group without referring to specific implementation details. This model helps bridge the gap between the high level concepts and the system design, ensuring that the structure of the system supports its required functionality while remaining modular and easy to extend.
+The business type model takes the concept model and makes it more structured by defining types and how they are grouped. Each group represents a different part of the system and has one main core type that everything else in that group depends on. For example, the portfolio group is centred around the portfolio, while the share group is centred around the share. Other types, like price data and charts, support these core types. Interfaces are only used where needed to show how different groups connect, instead of adding too many unnecessary ones. This makes the model clearer and easier to understand while still showing how the system is organised.
