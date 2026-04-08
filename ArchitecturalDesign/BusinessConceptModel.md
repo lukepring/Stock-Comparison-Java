@@ -1,7 +1,7 @@
 # Business Concept Model
 
 ## Business Concept Model Diagram
-<img width="601" height="402" alt="Arch DesBusinessConceptModel" src="https://github.com/user-attachments/assets/561d79da-ba9b-4ec0-8f61-35763a834324" />
+<img width="994" height="677" alt="image" src="https://github.com/user-attachments/assets/2ad12f62-da2b-41d1-9056-68452a1b80e4" />
 
 ## Description
-The business concept model outlines the main elements of the Share Price Comparison system and how they relate to each other at a high level. It focuses on real world concepts such as the user, shares, price records, comparisons, and charts, without going into technical or implementation detail. The model shows how a user initiates a comparison between two shares, which involves retrieving price data either from an external data source or from local storage. This data is then used to generate a chart that allows the user to compare performance over time. The purpose of this model is to clearly define the problem domain and provide a foundation for developing more detailed models later in the design process.
+The business concept model shows the main real world parts of the Share Price Comparison system and how they are connected. It focuses on things that actually exist, such as users, shares, portfolios, and price records, rather than how the system is built. The user is the main part of the system and can manage portfolios and watchlists, which are used to organise shares. Each share has price records that show how its value changes over time. These records are used to create charts so the user can see trends. The data comes from an external source and can also be stored locally so it can still be used without internet. This model helps clearly define what the system is about before moving on to more detailed designs.
