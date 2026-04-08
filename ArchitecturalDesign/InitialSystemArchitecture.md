@@ -1,1 +1,5 @@
+# Initial System Architecture Diagram
 
+<img width="398" height="963" alt="Arhtecture drawio" src="https://github.com/user-attachments/assets/b78318ad-7ac1-42e9-b466-9f14a4ef52ce" />
+
+The architecture follows a clean, interface-driven design that separates the core business logic from technical details. The Application Core acts as the central brain, orchestrating the system by consuming multiple interfaces like ICacheStore and IMarketDataClient to decide where and how to fetch pricing data. Most of the lower-level components, such as the Local Cache Store, AlphaVantage Service, and InMemory Price Repository, are designed with single-interface implementations to ensure they only have one responsibility. This setup uses interfaces as protective barriers between layers, allowing you to swap out the external AlphaVantage API or the in-memory storage without needing to rewrite the core application rules, resulting in a system that is both easy to test and highly flexible for future upgrades.
