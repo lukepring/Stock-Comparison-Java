@@ -10,11 +10,11 @@ import java.util.List;
 @Service
 public class PriceComparisonService implements IPriceComparisonService {
 
-    private final FetchSharePricesUseCase fetchSharePricesUseCase;
-    private final CompareSharesUseCase compareSharesUseCase;
+    private final IFetchPrices fetchSharePricesUseCase;
+    private final ICompareShares compareSharesUseCase;
 
-    public PriceComparisonService(FetchSharePricesUseCase fetchSharePricesUseCase, 
-                                  CompareSharesUseCase compareSharesUseCase) {
+    public PriceComparisonService(IFetchPrices fetchSharePricesUseCase, 
+                                  ICompareShares compareSharesUseCase) {
         this.fetchSharePricesUseCase = fetchSharePricesUseCase;
         this.compareSharesUseCase = compareSharesUseCase;
     }
