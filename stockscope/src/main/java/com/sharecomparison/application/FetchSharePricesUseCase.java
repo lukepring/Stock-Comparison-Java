@@ -1,6 +1,6 @@
 package com.sharecomparison.application;
 
-import com.sharecomparison.application.pipeline.PriceDataPipeline;
+import com.sharecomparison.application.pipeline.IPriceDataPipeline;
 import com.sharecomparison.domain.PriceData;
 import com.sharecomparison.infrastructure.ICacheStore;
 import com.sharecomparison.infrastructure.IMarketDataClient;
@@ -10,15 +10,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class FetchSharePricesUseCase {
+public class FetchSharePricesUseCase implements IFetchPrices {
 
     private final ICacheStore cacheStore;
     private final IMarketDataClient marketDataClient;
-    private final PriceDataPipeline priceDataPipeline;
+    private final IPriceDataPipeline priceDataPipeline;
 
     public FetchSharePricesUseCase(ICacheStore cacheStore, 
                                    IMarketDataClient marketDataClient,
-                                   PriceDataPipeline priceDataPipeline) {
+                                   IPriceDataPipeline priceDataPipeline) {
         this.cacheStore = cacheStore;
         this.marketDataClient = marketDataClient;
         this.priceDataPipeline = priceDataPipeline;

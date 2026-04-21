@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class CompareSharesUseCase {
+public class CompareSharesUseCase implements ICompareShares {
 
     private final IChartBuilder chartBuilder;
 

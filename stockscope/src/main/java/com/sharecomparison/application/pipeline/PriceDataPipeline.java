@@ -10,7 +10,7 @@ import java.util.List;
  * Takes a collection of filters and applies them sequentially.
  */
 @Component
-public class PriceDataPipeline {
+public class PriceDataPipeline implements IPriceDataPipeline {
 
     private final List<IPriceDataFilter> filters;
 
