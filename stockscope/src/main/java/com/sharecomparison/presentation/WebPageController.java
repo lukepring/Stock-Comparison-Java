@@ -26,7 +26,7 @@ public class WebPageController {
     public String showForm(Model model) {
         model.addAttribute("symbol1", "AAPL");
         model.addAttribute("symbol2", "MSFT");
-        model.addAttribute("startDate", LocalDate.now().minusYears(1).toString());
+        model.addAttribute("startDate", LocalDate.now().minusMonths(1).toString());
         model.addAttribute("endDate", LocalDate.now().toString());
         return "index";
     }
@@ -39,7 +39,7 @@ public class WebPageController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             Model model) {
 
-        LocalDate start = (startDate != null) ? startDate : LocalDate.now().minusYears(1);
+        LocalDate start = (startDate != null) ? startDate : LocalDate.now().minusMonths(1);
         LocalDate end = (endDate != null) ? endDate : LocalDate.now();
 
         symbol1 = symbol1.trim().toUpperCase();
@@ -86,7 +86,7 @@ public class WebPageController {
         }
         model.addAttribute("symbol1", "AAPL");
         model.addAttribute("symbol2", "MSFT");
-        model.addAttribute("startDate", LocalDate.now().minusYears(1).toString());
+        model.addAttribute("startDate", LocalDate.now().minusMonths(1).toString());
         model.addAttribute("endDate", LocalDate.now().toString());
         return "index";
     }
