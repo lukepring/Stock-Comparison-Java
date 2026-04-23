@@ -1,41 +1,31 @@
-# Meeting Report — 27/03/2026 (15:00–18:00)
-
+# Meeting Report — 27/03/2026 (15:00–16:00)
 ## Project
 **Stock Comparison Application**
 
 ## Meeting Goal
-- Present project progress to Lecturer
-- 
+- Present Sprint 2 to Lecturer
+- Get feedback for Sprint 3
 
 ## Roles
-- **Facilitator:** Luke Pring  
-- **Note taker:** Sameer Shabbir  
+**Facilitator:** Luke Pring
+**Note taker:** Jack Turner
 
 ## Attendees
-- Luke Pring  
-- Jack Turner  
-- Azlan Rashid  
-- Sameer Shabbir  
-- Dr Shekoufeh Kolahdouz Rahimi
-
-## Roundtable Updates
-- **Luke:** Outlined Sprint 2 requirements and tasks  
-- **Jack:** Planned UI development  
-- **Azlan:** Began working on architecture design  
-- **Sameer:** Updated meeting notes and project board  
+Luke Pring, Jack Turner, Azlan Rashid, Sameer Shabbir
 
 ## Discussion points
-- Reviewed Sprint 2 requirements
-- Discussed layered architecture (presentation, application, infrastructure)
-- Planned use of API and local cache
-- Decided to split work between frontend and backend
+- Lecturer reviewed our sprint 2 progress and failed us.
+- Update business concept model - Comparison isn’t an entity, change it to comparison result not comparison functionality, User needs to have portfolio and watch list, each group needs a <<core>>, not all the groups need an interface.
+- For use case diagram user must be able to update share prices, view and use different currencies etc
+- Initial system architecture diagram needs to be created.
+- Component specification diagram.
 
 ## Actions
-- Begin architecture diagram (**Azlan**)
-- Start backend setup (**Sameer**)
-- Start UI design (**Jack**)
-- Monitor progress and support team (**Luke**)
-- Update GitHub and Kanban board (**All**)
+- Redo use case diagram (Azlan)
+- Redo component specification diagram (Sameer)
+- Redo Business concept model and update type model (Jack)
+- Create initial system architecture diagram (Luke)
+- Update GitHub and Kanban board (All)
 
 ## Outcome
-Sprint 2 started with clear tasks and responsibilities. Initial architecture planning began.
+Sprint 2 has been failed, however we have been given another chance to present over the Easter break, so we will correct everything that the lecturer mentioned was wrong and present it again.
