@@ -241,10 +241,31 @@
                     <text class="axis-label"
                         th:attr="x=${(result.chartData.left + result.chartData.right) / 2},y=${result.chartData.bottom + 26}"
                         text-anchor="middle">Date</text>
+                        
+                    <text class="axis-label"
+                        th:attr="x=${result.chartData.left},y=${result.chartData.bottom + 16}"
+                        text-anchor="middle"
+                        th:text="${result.chartData.minDateStr}">Start Range</text>
+
+                    <text class="axis-label"
+                        th:attr="x=${result.chartData.right},y=${result.chartData.bottom + 16}"
+                        text-anchor="middle"
+                        th:text="${result.chartData.maxDateStr}">End Range</text>
+
                     <text class="axis-label"
                         th:attr="x=${result.chartData.left - 40},y=${(result.chartData.top + result.chartData.bottom) / 2}"
                         text-anchor="middle"
                         th:attrappend="transform=${'rotate(-90 ' + (result.chartData.left - 40) + ' ' + ((result.chartData.top + result.chartData.bottom) / 2) + ')'}">Price</text>
+
+                    <text class="axis-label"
+                        th:attr="x=${result.chartData.left - 8},y=${result.chartData.top + 4}"
+                        text-anchor="end"
+                        th:text="'$' + ${result.chartData.maxPrice}">Max</text>
+
+                    <text class="axis-label"
+                        th:attr="x=${result.chartData.left - 8},y=${result.chartData.bottom + 4}"
+                        text-anchor="end"
+                        th:text="'$' + ${result.chartData.minPrice}">Min</text>
 
                     <path th:attr="d=${result.chartData.symbol1Path}" fill="none" stroke="#181d80" stroke-width="2.5">
                     </path>
@@ -253,12 +274,10 @@
 
                     <g th:each="point : ${result.chartData.symbol1Points}">
                         <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#181d80"></circle>
-                        <!--<text class="value-label" th:attr="x=${point.x + 4},y=${point.y - 4}" th:text="${point.value}"></text>-->
                     </g>
 
                     <g th:each="point : ${result.chartData.symbol2Points}">
                         <circle th:attr="cx=${point.x},cy=${point.y}" r="2.5" fill="#911d1d"></circle>
-                        <!--<text class="value-label" th:attr="x=${point.x + 4},y=${point.y + 12}" th:text="${point.value}"></text>-->
                     </g>
                 </svg>
             </div>

@@ -90,4 +90,24 @@ public class WebPageController {
         model.addAttribute("endDate", LocalDate.now().toString());
         return "index";
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgument(IllegalArgumentException ex, Model model) {
+        model.addAttribute("error", ex.getMessage());
+        model.addAttribute("symbol1", "AAPL");
+        model.addAttribute("symbol2", "MSFT");
+        model.addAttribute("startDate", LocalDate.now().minusYears(1).toString());
+        model.addAttribute("endDate", LocalDate.now().toString());
+        return "index";
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public String handleIllegalState(IllegalStateException ex, Model model) {
+        model.addAttribute("error", ex.getMessage());
+        model.addAttribute("symbol1", "AAPL");
+        model.addAttribute("symbol2", "MSFT");
+        model.addAttribute("startDate", LocalDate.now().minusYears(1).toString());
+        model.addAttribute("endDate", LocalDate.now().toString());
+        return "index";
+    }
 }
