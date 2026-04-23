@@ -55,11 +55,7 @@ public class AlphaVantageService implements MarketDataService {
                 return repository.loadPrices(symbol, startDate, endDate);
             }
 
-            List<PriceData> cached = repository.loadPrices(symbol, startDate, endDate);
-            if (!cached.isEmpty()) {
-                log.debug("Returning cached prices for symbol={} ({} to {})", symbol, startDate, endDate);
-                return cached;
-            }
+
 
             String json = fetchTimeSeriesDailyJson(symbol, outputSize);
             if (json == null) {
