@@ -5,6 +5,8 @@ import com.sharecomparison.domain.ChartPoint;
 import com.sharecomparison.domain.PriceData;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,24 +20,26 @@ public class ChartBuilder implements IChartBuilder {
 
     @Override
     public ChartData buildChart(List<PriceData> symbol1Data, List<PriceData> symbol2Data) {
-        List<Double> prices1 = symbol1Data.stream().map(PriceData::getClosingPrice).toList();
-        List<Double> prices2 = symbol2Data.stream().map(PriceData::getClosingPrice).toList();
+        List<PriceData> allData = new ArrayList<>(symbol1Data);
+        allData.addAll(symbol2Data);
 
-        List<Double> allPrices = new ArrayList<>(prices1);
-        allPrices.addAll(prices2);
-
-        if (allPrices.isEmpty()) {
+        if (allData.isEmpty()) {
             return new ChartData(LEFT, RIGHT, TOP, BOTTOM, (TOP + BOTTOM) / 2,
-                    "", "", List.of(), List.of());
+                    0.0, 0.0, "", "", "", "", List.of(), List.of());
         }
 
-        double yMin = allPrices.stream().mapToDouble(Double::doubleValue).min().orElse(0) - 1.0;
-        double yMax = allPrices.stream().mapToDouble(Double::doubleValue).max().orElse(1) + 1.0;
-        int pointCount = Math.max(prices1.size(), prices2.size());
-        double xMax = Math.max(1.0, pointCount - 1.0);
+        double trueMinPrice = allData.stream().mapToDouble(PriceData::getClosingPrice).min().orElse(0.0);
+        double trueMaxPrice = allData.stream().mapToDouble(PriceData::getClosingPrice).max().orElse(0.0);
 
-        List<ChartPoint> symbol1Points = buildPoints(prices1, xMax, yMin, yMax);
-        List<ChartPoint> symbol2Points = buildPoints(prices2, xMax, yMin, yMax);
+        double yMin = trueMinPrice - 1.0;
+        double yMax = trueMaxPrice + 1.0;
+
+        LocalDate minDate = allData.stream().map(PriceData::getDate).min(LocalDate::compareTo).orElse(LocalDate.now());
+        LocalDate maxDate = allData.stream().map(PriceData::getDate).max(LocalDate::compareTo).orElse(LocalDate.now());
+        long totalDays = ChronoUnit.DAYS.between(minDate, maxDate);
+
+        List<ChartPoint> symbol1Points = buildPoints(symbol1Data, minDate, totalDays, yMin, yMax);
+        List<ChartPoint> symbol2Points = buildPoints(symbol2Data, minDate, totalDays, yMin, yMax);
 
         return new ChartData(
                 LEFT,
@@ -43,6 +47,10 @@ public class ChartBuilder implements IChartBuilder {
                 TOP,
                 BOTTOM,
                 (TOP + BOTTOM) / 2,
+                trueMinPrice,
+                trueMaxPrice,
+                minDate.toString(),
+                maxDate.toString(),
                 buildPath(symbol1Points),
                 buildPath(symbol2Points),
                 symbol1Points,
@@ -50,11 +58,13 @@ public class ChartBuilder implements IChartBuilder {
         );
     }
 
-    private List<ChartPoint> buildPoints(List<Double> series, double xMax, double yMin, double yMax) {
+    private List<ChartPoint> buildPoints(List<PriceData> series, LocalDate minDate, long totalDays, double yMin, double yMax) {
         List<ChartPoint> points = new ArrayList<>();
-        for (int idx = 0; idx < series.size(); idx++) {
-            double value = series.get(idx);
-            double x = LEFT + (idx / xMax) * (RIGHT - LEFT);
+        for (PriceData data : series) {
+            double value = data.getClosingPrice();
+            long daysFromStart = ChronoUnit.DAYS.between(minDate, data.getDate());
+            double xPosNormalized = totalDays == 0 ? 0.5 : (double) daysFromStart / totalDays;
+            double x = LEFT + xPosNormalized * (RIGHT - LEFT);
             double y = BOTTOM - ((value - yMin) / Math.max(1.0, yMax - yMin)) * (BOTTOM - TOP);
             points.add(new ChartPoint(round2(x), round2(y), round2(value)));
         }

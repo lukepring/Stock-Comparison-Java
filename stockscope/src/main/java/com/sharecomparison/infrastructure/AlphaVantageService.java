@@ -92,7 +92,7 @@ public class AlphaVantageService implements MarketDataService {
             }
             if (json.contains("\"Error Message\"") || json.contains("\"error message\"")) {
                 log.warn("Alpha Vantage error for symbol={}: {}", symbol, extractStringFieldOrSnippet(json, "Error Message"));
-                return repository.loadPrices(symbol, startDate, endDate);
+                throw new IllegalArgumentException("Invalid ticker symbol: " + symbol);
             }
 
             List<PriceData> prices = parseTimeSeriesDailyJson(symbol, json, startDate, endDate);
@@ -107,6 +107,9 @@ public class AlphaVantageService implements MarketDataService {
 
         } catch (Exception e) {
             log.warn("Alpha Vantage fetch failed for symbol={}: {}", symbol, e.toString());
+            if (e instanceof java.net.ConnectException || e instanceof java.net.UnknownHostException) {
+                throw new IllegalStateException("Data retrieval failed. Please check internet connection.", e);
+            }
             return repository.loadPrices(symbol, startDate, endDate);
         }
     }

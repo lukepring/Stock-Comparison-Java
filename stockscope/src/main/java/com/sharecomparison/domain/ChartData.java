@@ -9,6 +9,10 @@ public class ChartData {
     private final double top;
     private final double bottom;
     private final double midY;
+    private final double minPrice;
+    private final double maxPrice;
+    private final String minDateStr;
+    private final String maxDateStr;
     private final String symbol1Path;
     private final String symbol2Path;
     private final List<ChartPoint> symbol1Points;
@@ -19,6 +23,10 @@ public class ChartData {
                      double top,
                      double bottom,
                      double midY,
+                     double minPrice,
+                     double maxPrice,
+                     String minDateStr,
+                     String maxDateStr,
                      String symbol1Path,
                      String symbol2Path,
                      List<ChartPoint> symbol1Points,
@@ -28,6 +36,10 @@ public class ChartData {
         this.top = top;
         this.bottom = bottom;
         this.midY = midY;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+        this.minDateStr = minDateStr;
+        this.maxDateStr = maxDateStr;
         this.symbol1Path = symbol1Path;
         this.symbol2Path = symbol2Path;
         this.symbol1Points = symbol1Points;
@@ -52,6 +64,22 @@ public class ChartData {
 
     public double getMidY() {
         return midY;
+    }
+
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public String getMinDateStr() {
+        return minDateStr;
+    }
+
+    public String getMaxDateStr() {
+        return maxDateStr;
     }
 
     public String getSymbol1Path() {
