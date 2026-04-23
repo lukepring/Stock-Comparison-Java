@@ -219,7 +219,7 @@
 
         <div th:if="${result}">
             <p class="muted"
-               th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.startDate} to ${result.endDate}|">
+                th:text="|Showing ${result.symbol1} vs ${result.symbol2} from ${result.chartData.minDateStr} to ${result.chartData.maxDateStr} (Free API Key Limits this range to 5 months maximum)|">
             </p>
 
             <div class="chart-wrap">
@@ -234,38 +234,28 @@
                     <line
                         th:attr="x1=${result.chartData.left},y1=${result.chartData.top},x2=${result.chartData.left},y2=${result.chartData.bottom}"
                         stroke="#8ca0b7" stroke-width="1"></line>
-                    <line
-                        th:attr="x1=${result.chartData.left},y1=${result.chartData.midY},x2=${result.chartData.right},y2=${result.chartData.midY}"
-                        stroke="#dbe3ee" stroke-width="1"></line>
+
 
                     <text class="axis-label"
                         th:attr="x=${(result.chartData.left + result.chartData.right) / 2},y=${result.chartData.bottom + 26}"
                         text-anchor="middle">Date</text>
-                        
-                    <text class="axis-label"
-                        th:attr="x=${result.chartData.left},y=${result.chartData.bottom + 16}"
-                        text-anchor="middle"
-                        th:text="${result.chartData.minDateStr}">Start Range</text>
 
-                    <text class="axis-label"
-                        th:attr="x=${result.chartData.right},y=${result.chartData.bottom + 16}"
-                        text-anchor="middle"
-                        th:text="${result.chartData.maxDateStr}">End Range</text>
+                    <text class="axis-label" th:attr="x=${result.chartData.left},y=${result.chartData.bottom + 16}"
+                        text-anchor="middle" th:text="${result.chartData.minDateStr}">Start Range</text>
+
+                    <text class="axis-label" th:attr="x=${result.chartData.right},y=${result.chartData.bottom + 16}"
+                        text-anchor="middle" th:text="${result.chartData.maxDateStr}">End Range</text>
 
                     <text class="axis-label"
                         th:attr="x=${result.chartData.left - 40},y=${(result.chartData.top + result.chartData.bottom) / 2}"
                         text-anchor="middle"
                         th:attrappend="transform=${'rotate(-90 ' + (result.chartData.left - 40) + ' ' + ((result.chartData.top + result.chartData.bottom) / 2) + ')'}">Price</text>
 
-                    <text class="axis-label"
-                        th:attr="x=${result.chartData.left - 8},y=${result.chartData.top + 4}"
-                        text-anchor="end"
-                        th:text="'$' + ${result.chartData.maxPrice}">Max</text>
+                    <text class="axis-label" th:attr="x=${result.chartData.left - 8},y=${result.chartData.top + 4}"
+                        text-anchor="end" th:text="${result.chartData.maxPrice}">Max</text>
 
-                    <text class="axis-label"
-                        th:attr="x=${result.chartData.left - 8},y=${result.chartData.bottom + 4}"
-                        text-anchor="end"
-                        th:text="'$' + ${result.chartData.minPrice}">Min</text>
+                    <text class="axis-label" th:attr="x=${result.chartData.left - 8},y=${result.chartData.bottom + 4}"
+                        text-anchor="end" th:text="${result.chartData.minPrice}">Min</text>
 
                     <path th:attr="d=${result.chartData.symbol1Path}" fill="none" stroke="#181d80" stroke-width="2.5">
                     </path>
